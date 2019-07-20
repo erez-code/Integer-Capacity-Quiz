@@ -1,6 +1,7 @@
 var printButton = document.getElementById("buttonPrintNewRandomInt");
 var displayResault = document.getElementById("displayResault1");
 var scoreUpdatge = document.getElementById("score");
+var buttonCheckAnswer = document.getElementById("buttonCheckAnswer");
 
 var randomNumOfBytes;
 var randomInteger;
@@ -37,24 +38,23 @@ function printNewRandomInt() {
   displayPrintNewRandomInt.innerHTML = Number(randomInteger).toLocaleString();
   displayResault.innerHTML = "";
   triedToAnswerFlag = 0;
+  buttonCheckAnswer.disabled = false;
 }
-
-var buttonCheckAnswer = document.getElementById("buttonCheckAnswer");
 
 buttonCheckAnswer.addEventListener("click", function() {
   var answerInBytes = document.getElementById("answerInBytes").value;
 
-  if (answerInBytes === "") {
-    displayResault.innerHTML = "Not enough input.";
-  } else if (answerInBytes > 4 || answerInBytes < 1) {
-    displayResault.innerHTML = "Insert a number between 1 and 4.";
-  } else {
-    //CHECK ANSWER
-    var bin = randomInteger.toString(2);
-    //var bin_length = bin.length;
-    bin = bin.padStart(32, "0");
+  if (triedToAnswerFlag == 0) {
+    if (answerInBytes === "") {
+      displayResault.innerHTML = "Not enough input.";
+    } else if (answerInBytes > 4 || answerInBytes < 1) {
+      displayResault.innerHTML = "Insert a number between 1 and 4.";
+    } else {
+      //CHECK ANSWER
+      var bin = randomInteger.toString(2);
+      //var bin_length = bin.length;
+      bin = bin.padStart(32, "0");
 
-    if (triedToAnswerFlag == 0) {
       displayResault.innerHTML =
         " this value requires " +
         randomNumOfBytes +
@@ -76,6 +76,7 @@ buttonCheckAnswer.addEventListener("click", function() {
         displayResault.insertAdjacentHTML("afterbegin", "Wrong!");
       }
       triedToAnswerFlag = 1;
+      buttonCheckAnswer.disabled = true;
     }
   }
 });
