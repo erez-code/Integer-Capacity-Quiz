@@ -1,8 +1,11 @@
 var printButton = document.getElementById("buttonPrintNewRandomInt");
 var displayResault = document.getElementById("displayResault1");
+var scoreUpdatge = document.getElementById("score");
 
 var randomNumOfBytes;
 var randomInteger;
+var triedToAnswerFlag = 0;
+var scoreCount = 0;
 printNewRandomInt();
 
 printButton.addEventListener("click", printNewRandomInt);
@@ -33,6 +36,7 @@ function printNewRandomInt() {
 
   displayPrintNewRandomInt.innerHTML = Number(randomInteger).toLocaleString();
   displayResault.innerHTML = "";
+  triedToAnswerFlag = 0;
 }
 
 var buttonCheckAnswer = document.getElementById("buttonCheckAnswer");
@@ -48,26 +52,30 @@ buttonCheckAnswer.addEventListener("click", function() {
     //CHECK ANSWER
     var bin = randomInteger.toString(2);
     //var bin_length = bin.length;
-    console.log(bin);
     bin = bin.padStart(32, "0");
 
-    displayResault.innerHTML =
-      " this value requires " +
-      randomNumOfBytes +
-      " byte(s)." +
-      "<br />" +
-      bin.substring(0, 8) +
-      " " +
-      bin.substring(8, 16) +
-      " " +
-      bin.substring(16, 24) +
-      " " +
-      bin.substring(24, 32);
+    if (triedToAnswerFlag == 0) {
+      displayResault.innerHTML =
+        " this value requires " +
+        randomNumOfBytes +
+        " byte(s)." +
+        "<br />" +
+        bin.substring(0, 8) +
+        " " +
+        bin.substring(8, 16) +
+        " " +
+        bin.substring(16, 24) +
+        " " +
+        bin.substring(24, 32);
 
-    if (answerInBytes == randomNumOfBytes) {
-      displayResault.insertAdjacentHTML("afterbegin", "Correct!");
-    } else {
-      displayResault.insertAdjacentHTML("afterbegin", "Wrong!");
+      if (answerInBytes == randomNumOfBytes) {
+        ++scoreCount;
+        scoreUpdatge.innerHTML = scoreCount;
+        displayResault.insertAdjacentHTML("afterbegin", "Correct!");
+      } else {
+        displayResault.insertAdjacentHTML("afterbegin", "Wrong!");
+      }
+      triedToAnswerFlag = 1;
     }
   }
 });
