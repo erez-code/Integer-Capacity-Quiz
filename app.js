@@ -16,14 +16,14 @@ function printNewRandomInt() {
 
   var maxInt = Math.pow(rangeOfByte, randomNumOfBytes) - 1;
 
-  console.log(
+  /*console.log(
     "randomNumOfBytes " +
       randomNumOfBytes +
       " minint:" +
       minInt +
       " maxint: " +
       maxInt
-  );
+  );*/
 
   randomInteger = getRndInteger(minInt, maxInt);
 
@@ -45,8 +45,7 @@ buttonCheckAnswer.addEventListener("click", function() {
   } else if (answerInBytes > 4 || answerInBytes < 1) {
     displayResault.innerHTML = "Insert a number between 1 and 4.";
   } else {
-    //calculate
-
+    //CHECK ANSWER
     var bin = randomInteger.toString(2);
     //var bin_length = bin.length;
     bin = bin.padStart(32, "0");
