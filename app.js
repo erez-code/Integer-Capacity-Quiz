@@ -48,6 +48,7 @@ buttonCheckAnswer.addEventListener("click", function() {
     //CHECK ANSWER
     var bin = randomInteger.toString(2);
     //var bin_length = bin.length;
+    console.log(bin);
     bin = bin.padStart(32, "0");
 
     displayResault.innerHTML =
