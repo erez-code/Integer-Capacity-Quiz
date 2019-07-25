@@ -2,6 +2,7 @@ var printButton = document.getElementById("buttonPrintNewRandomInt");
 var displayResault = document.getElementById("displayResault1");
 var scoreUpdatge = document.getElementById("score");
 var buttonCheckAnswer = document.getElementById("buttonCheckAnswer");
+var answerInBytes = document.getElementById("answerInBytes");
 
 var randomNumOfBytes;
 var randomInteger;
@@ -12,22 +13,13 @@ printNewRandomInt();
 printButton.addEventListener("click", printNewRandomInt);
 
 function printNewRandomInt() {
-  var rangeOfByte = 256;
-  randomNumOfBytes = getRndInteger(1, 4);
+  var rangeOfByte = Math.pow(2, 8);
+  randomNumOfBytes = getRndInteger(1, 5);
 
   var minInt =
     randomNumOfBytes != 1 ? Math.pow(rangeOfByte, randomNumOfBytes - 1) : 0;
 
   var maxInt = Math.pow(rangeOfByte, randomNumOfBytes) - 1;
-
-  /*console.log(
-    "randomNumOfBytes " +
-      randomNumOfBytes +
-      " minint:" +
-      minInt +
-      " maxint: " +
-      maxInt
-  );*/
 
   randomInteger = getRndInteger(minInt, maxInt);
 
@@ -41,13 +33,25 @@ function printNewRandomInt() {
   buttonCheckAnswer.disabled = false;
 }
 
+answerInBytes.addEventListener("keyup", function() {
+  if (event.keyCode === 13) {
+    buttonCheckAnswer.click();
+  }
+});
+
+document.body.addEventListener("keyup", function() {
+  if (event.keyCode === 78) {
+    printButton.click();
+  }
+});
+
 buttonCheckAnswer.addEventListener("click", function() {
-  var answerInBytes = document.getElementById("answerInBytes").value;
+  var answerInBytesValue = answerInBytes.value;
 
   if (triedToAnswerFlag == 0) {
-    if (answerInBytes === "") {
+    if (answerInBytesValue === "") {
       displayResault.innerHTML = "Not enough input.";
-    } else if (answerInBytes > 4 || answerInBytes < 1) {
+    } else if (answerInBytesValue > 4 || answerInBytesValue < 1) {
       displayResault.innerHTML = "Insert a number between 1 and 4.";
     } else {
       //CHECK ANSWER
@@ -68,7 +72,7 @@ buttonCheckAnswer.addEventListener("click", function() {
         " " +
         bin.substring(24, 32);
 
-      if (answerInBytes == randomNumOfBytes) {
+      if (answerInBytesValue == randomNumOfBytes) {
         ++scoreCount;
         scoreUpdatge.innerHTML = scoreCount;
         displayResault.insertAdjacentHTML("afterbegin", "Correct!");
