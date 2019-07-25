@@ -31,6 +31,8 @@ function printNewRandomInt() {
   displayResault.innerHTML = "";
   triedToAnswerFlag = 0;
   buttonCheckAnswer.disabled = false;
+
+  answerInBytes.value = "";
 }
 
 answerInBytes.addEventListener("keyup", function() {
