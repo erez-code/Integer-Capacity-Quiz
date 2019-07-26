@@ -8,18 +8,19 @@ var randomNumOfBytes;
 var randomInteger;
 var triedToAnswerFlag = 0;
 var scoreCount = 0;
+var maxBytes = 5;
 printNewRandomInt();
 
 printButton.addEventListener("click", printNewRandomInt);
 
 function printNewRandomInt() {
-  var rangeOfByte = Math.pow(2, 8);
-  randomNumOfBytes = getRndInteger(1, 5);
+  var inOneByte = Math.pow(2, 8);
+  randomNumOfBytes = getRndInteger(1, maxBytes);
 
   var minInt =
-    randomNumOfBytes != 1 ? Math.pow(rangeOfByte, randomNumOfBytes - 1) : 0;
+    randomNumOfBytes != 1 ? Math.pow(inOneByte, randomNumOfBytes - 1) : 0;
 
-  var maxInt = Math.pow(rangeOfByte, randomNumOfBytes) - 1;
+  var maxInt = Math.pow(inOneByte, randomNumOfBytes) - 1;
 
   randomInteger = getRndInteger(minInt, maxInt);
 
@@ -53,13 +54,14 @@ buttonCheckAnswer.addEventListener("click", function() {
   if (triedToAnswerFlag == 0) {
     if (answerInBytesValue === "") {
       displayResault.innerHTML = "Not enough input.";
-    } else if (answerInBytesValue > 4 || answerInBytesValue < 1) {
-      displayResault.innerHTML = "Insert a number between 1 and 4.";
+    } else if (answerInBytesValue > maxBytes || answerInBytesValue < 1) {
+      displayResault.innerHTML =
+        "Insert a number between 1 and " + maxBytes + ".";
     } else {
       //CHECK ANSWER
       var bin = randomInteger.toString(2);
       //var bin_length = bin.length;
-      bin = bin.padStart(32, "0");
+      bin = bin.padStart(40, "0");
 
       displayResault.innerHTML =
         " this value requires " +
@@ -72,7 +74,9 @@ buttonCheckAnswer.addEventListener("click", function() {
         " " +
         bin.substring(16, 24) +
         " " +
-        bin.substring(24, 32);
+        bin.substring(24, 32) +
+        " " +
+        bin.substring(32, 40);
 
       if (answerInBytesValue == randomNumOfBytes) {
         ++scoreCount;
@@ -86,10 +90,6 @@ buttonCheckAnswer.addEventListener("click", function() {
     }
   }
 });
-
-function randomInt() {
-  return Math.floor(Math.random() * Math.pow(256, 4)) + 1;
-}
 
 function getRndInteger(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
